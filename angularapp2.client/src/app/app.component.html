@@ -1,0 +1,118 @@
+<div class="container mt-4">
+  <h2>Students</h2>
+  <button class="btn btn-primary mb-3" (click)="openAddModal()">Add Student</button>
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Age</th>
+        <th>Profile Picture</th>
+        <th>Addresses</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let student of students">
+        <td>{{ student.id }}</td>
+        <td>{{ student.name }}</td>
+        <td>{{ student.age }}</td>
+        <td>
+        <div *ngIf="student.profilePicture != null"><img src="data:image/png;base64,{{ student.profilePicture }}"style="max-width:1000px; max-height:100px;" /> </div>
+        </td>
+        <td>
+          <ul *ngIf="student.addresses && student.addresses.length > 0">
+            <li *ngFor="let addr of student.addresses">
+              {{ addr.addressLine }}, {{ addr.city }}, {{ addr.state }}, {{ addr.pinCode }}
+            </li>
+          </ul>
+        </td>
+        <td>
+          <button class="btn btn-info btn-sm me-1" (click)="openDetailsModal(student)">Details</button>
+          <button class="btn btn-warning btn-sm me-1" (click)="openEditModal(student)">Edit</button>
+          <button class="btn btn-danger btn-sm" (click)="deleteStudent(student)">Delete</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- Modal -->
+<div #studentModal class="modal fade" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <form [formGroup]="studentForm" (ngSubmit)="saveStudent()">
+        <div class="modal-header">
+          <h5 class="modal-title">{{ modalTitle }}</h5>
+          <button type="button" class="btn-close" aria-label="Close" (click)="closeModal()"></button>
+        </div>
+        <div class="modal-body">
+          <div *ngIf="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
+          <div class="mb-3">
+            
+            <label for="name" class="form-label">Name</label>
+            <input type="text" id="name" class="form-control" formControlName="name" [ngClass]="{'is-invalid': studentForm.get('name')?.touched && studentForm.get('name')?.invalid}">
+            <div class="invalid-feedback" *ngIf="studentForm.get('name')?.errors?.['required']">
+              Name is required.
+            </div>
+          </div>
+          <div class="mb-3">
+            <label for="age" class="form-label">Age</label>
+            <input type="number" id="age" class="form-control" formControlName="age" [ngClass]="{'is-invalid': studentForm.get('age')?.touched && studentForm.get('age')?.invalid}">
+            <div class="invalid-feedback" *ngIf="studentForm.get('age')?.errors?.['required']">
+              Age is required.
+            </div>
+          </div>
+          <div class="mb-3" *ngIf="modalTitle !== 'Student Details'">
+            <label for="profilePicture" class="form-label">Profile Picture</label>
+            <input type="file" id="profilePicture" class="form-control" (change)="onFileChange($event)">
+          </div>
+          <hr>
+          <h6>Addresses</h6>
+          <div formArrayName="addresses">
+            <div *ngFor="let address of addressesFormArray.controls; let i=index" [formGroupName]="i" class="border p-2 mb-2">
+              <div class="mb-2">
+                <label class="form-label">Address Line</label>
+                <input type="text" class="form-control" formControlName="addressLine" [ngClass]="{'is-invalid': address.get('addressLine')?.touched && address.get('addressLine')?.invalid}">
+                <div class="invalid-feedback" *ngIf="address.get('addressLine')?.errors?.['required']">
+                  Address is required.
+                </div>
+              </div>
+              <div class="mb-2">
+                <label class="form-label">City</label>
+                <input type="text" class="form-control" formControlName="city" [ngClass]="{'is-invalid': address.get('city')?.touched && address.get('city')?.invalid}">
+                <div class="invalid-feedback" *ngIf="address.get('city')?.errors?.['required']">
+                  City is required.
+                </div>
+              </div>
+              <div class="mb-2">
+                <label class="form-label">State</label>
+                <input type="text" class="form-control" formControlName="state" [ngClass]="{'is-invalid': address.get('state')?.touched && address.get('state')?.invalid}">
+                <div class="invalid-feedback" *ngIf="address.get('state')?.errors?.['required']">
+                  State is required.
+                </div>
+              </div>
+              <div class="mb-2">
+                <label class="form-label">Pin Code</label>
+                <input type="text" class="form-control" formControlName="pinCode" [ngClass]="{'is-invalid': address.get('pinCode')?.touched && address.get('pinCode')?.invalid}">
+                <div class="invalid-feedback" *ngIf="address.get('pinCode')?.errors?.['required']">
+                  Pin Code is required.
+                </div>
+              </div>
+              <div *ngIf="modalTitle !== 'Student Details'">
+                <button type="button" class="btn btn-danger btn-sm" (click)="removeAddress(i)">Remove Address</button>
+              </div>
+            </div>
+          </div>
+          <div *ngIf="modalTitle !== 'Student Details'">
+            <button type="button" class="btn btn-secondary btn-sm" (click)="addAddress()">Add Address</button>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" (click)="closeModal()">Close</button>
+          <button type="submit" class="btn btn-primary" *ngIf="modalTitle !== 'Student Details'">Save</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,89 @@
+@AngularApp2.Server_HostAddress = https://localhost:7001
+
+GET {{AngularApp2.Server_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
+
+
+GET {{AngularApp2.Server_HostAddress}}/api/students
+
+###
+
+@id=0
+DELETE {{AngularApp2.Server_HostAddress}}/api/students/{{id}}
+
+###
+
+GET {{AngularApp2.Server_HostAddress}}/api/students/{{id}}
+
+###
+
+PUT {{AngularApp2.Server_HostAddress}}/api/students/{{id}}
+Content-Type: application/json
+
+{
+  //Student
+}
+
+###
+
+GET {{AngularApp2.Server_HostAddress}}/api/addresses
+
+###
+
+POST {{AngularApp2.Server_HostAddress}}/api/addresses
+Content-Type: application/json
+
+{
+  //Address
+}
+
+###
+
+@studentId=1
+GET {{AngularApp2.Server_HostAddress}}/api/addresses/ByStudent/{{studentId}}
+
+###
+
+DELETE {{AngularApp2.Server_HostAddress}}/api/addresses/{{id}}
+
+###
+
+GET {{AngularApp2.Server_HostAddress}}/api/addresses/{{id}}
+
+###
+
+PUT {{AngularApp2.Server_HostAddress}}/api/addresses/{{id}}
+Content-Type: application/json
+
+{
+  //Address
+}
+
+###
+
+POST {{AngularApp2.Server_HostAddress}}/api/students
+Content-Type: application/json
+
+{
+  //Student
+}
+
+###
+
+POST {{AngularApp2.Server_HostAddress}}/api/students
+Content-Type: application/json
+
+{
+  "id": 2,
+  "name": "test2",
+  "age": 12,
+  
+}
+
+###
+
+GET {{AngularApp2.Server_HostAddress}}/students
+
+###
