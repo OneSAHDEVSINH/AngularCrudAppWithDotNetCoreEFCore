@@ -18,7 +18,10 @@
         <td>{{ student.name }}</td>
         <td>{{ student.age }}</td>
         <td>
-        <div *ngIf="student.profilePicture != null"><img src="data:image/png;base64,{{ student.profilePicture }}"style="max-width:1000px; max-height:100px;" /> </div>
+          <div *ngIf="student.profilePicture != null; else noProfilePicture"><img src="data:image/png;base64,{{ student.profilePicture }}" style="max-width:1000px; max-height:100px;" /> </div>
+          <ng-template #noProfilePicture>
+            <div class="alert alert-info">No profile picture available</div>
+          </ng-template>
         </td>
         <td>
           <ul *ngIf="student.addresses && student.addresses.length > 0">
@@ -49,7 +52,7 @@
         <div class="modal-body">
           <div *ngIf="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
           <div class="mb-3">
-            
+
             <label for="name" class="form-label">Name</label>
             <input type="text" id="name" class="form-control" formControlName="name" [ngClass]="{'is-invalid': studentForm.get('name')?.touched && studentForm.get('name')?.invalid}">
             <div class="invalid-feedback" *ngIf="studentForm.get('name')?.errors?.['required']">
@@ -67,6 +70,18 @@
             <label for="profilePicture" class="form-label">Profile Picture</label>
             <input type="file" id="profilePicture" class="form-control" (change)="onFileChange($event)">
           </div>
+          <div class="mb-3" *ngIf="modalTitle === 'Student Details'">
+            <label for="profilePicture" class="form-label">Profile Picture</label>
+            <div *ngIf="studentForm.get('profilePicture')?.value; else noProfilePicture">
+              <img id="profilePicture" class="img-fluid"
+                   [src]="'data:image/png;base64,' + studentForm.get('profilePicture')?.value"
+                   style="max-width:100%; max-height:200px;" />
+            </div>
+            <ng-template #noProfilePicture>
+              <div class="alert alert-info">No profile picture available</div>
+            </ng-template>
+          </div>
+
           <hr>
           <h6>Addresses</h6>
           <div formArrayName="addresses">

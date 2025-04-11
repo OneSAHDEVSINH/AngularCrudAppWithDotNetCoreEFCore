@@ -36,7 +36,7 @@ export class StudentComponent implements OnInit {
     private addressService: AddressService,
     private fb: FormBuilder
   ) { }
-
+  
   ngOnInit(): void {
     this.loadStudents();
     this.initializeForm();
