@@ -20,7 +20,7 @@
         <td>
           <div *ngIf="student.profilePicture != null; else noProfilePicture"><img src="data:image/png;base64,{{ student.profilePicture }}" style="max-width:1000px; max-height:100px;" /> </div>
           <ng-template #noProfilePicture>
-            <div class="alert alert-info">No profile picture available</div>
+            <div class="alert alert-info">No profile picture available or uploaded by the user.</div>
           </ng-template>
         </td>
         <td>
@@ -78,7 +78,7 @@
                    style="max-width:100%; max-height:200px;" />
             </div>
             <ng-template #noProfilePicture>
-              <div class="alert alert-info">No profile picture available</div>
+              <div class="alert alert-info">No profile picture available or uploaded by the user.</div>
             </ng-template>
           </div>
 
