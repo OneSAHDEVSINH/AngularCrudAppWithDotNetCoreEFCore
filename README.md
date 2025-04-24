@@ -1,4 +1,7 @@
 # AngularCrudAppWithDotNetCoreEFCore
+![image](https://github.com/user-attachments/assets/7ebca051-efe1-447d-8fa1-3e35d9457c2f)
+![image](https://github.com/user-attachments/assets/e3fd7831-33ae-4eab-8262-b39c5d34b0ca)
+![image](https://github.com/user-attachments/assets/892fc772-2581-4882-a0f8-10f11e7733cf)
 
 ## Introduction
 
